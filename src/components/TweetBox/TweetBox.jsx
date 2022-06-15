@@ -3,22 +3,25 @@ import TweetInput from "./TweetInput"
 import "./TweetBox.css"
 
 export default function TweetBox(props) {
-  const submit = document.querySelector("button.tweet-submit-button");
+  //const submit = document.querySelector("button.tweet-submit-button");
+  const [disabled, setDisabled] = React.useState(true);
   function handleOnTweetTextChange(evt) {
     //evt.preventDefault();
+    //const submit = document.querySelector("button.tweet-submit-button");
     console.log(evt.target.value);
     
     if (evt.target.value.length > 140 || evt.target.value.length === 0) {
       console.log("changed to disabled");
-      submit.disabled = true;
+      setDisabled(true);
     } else {
       console.log("changed to not disabled");
-      submit.disabled = false;
+      setDisabled(false);
     }
     props.setTweetText(evt.target.value);
   }
 
   function handleOnSubmit() {
+    const submit = document.querySelector("button.tweet-submit-button");
     console.log("clicled");
     let newTweet = {name: props.userProfile.name, 
                     handle: props.userProfile.handle, 
@@ -32,7 +35,7 @@ export default function TweetBox(props) {
     console.log(newTweets);
     props.setTweets(newTweets);
     props.setTweetText("");
-    submit.disabled = true;
+    setDisabled(true);
   }
 
   return (
@@ -42,7 +45,7 @@ export default function TweetBox(props) {
       <div className="tweet-box-footer">
         <TweetBoxIcons />
         <TweetCharacterCount tweetText={props.tweetText}/>
-        <TweetSubmitButton handleOnSubmit={handleOnSubmit}/>
+        <TweetSubmitButton handleOnSubmit={handleOnSubmit} disabled={disabled}/>
       </div>
     </div>
   )
@@ -64,11 +67,11 @@ export function TweetCharacterCount(props) {
   return <span className={props.tweetText.length > 140 ? "red" : ""}>{props.tweetText.length > 0 ? 140 - props.tweetText.length : null}</span>
 }
 
-export function TweetSubmitButton({handleOnSubmit}) {
+export function TweetSubmitButton({handleOnSubmit, disabled}) {
   return (
     <div className="tweet-submit">
       <i className="fas fa-plus-circle"></i>
-      <button className="tweet-submit-button" onClick={handleOnSubmit}>Tweet</button>
+      <button className="tweet-submit-button" onClick={handleOnSubmit} disabled={disabled}>Tweet</button>
     </div>
   )
 }
