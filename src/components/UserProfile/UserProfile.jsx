@@ -17,11 +17,9 @@ export default function UserProfile({ userProfile }) {
 export function CardContent(props) {
   return (
     <div className="card-content">
-      <span className="fa-stack add-picture-icon">
-        <i className="fas fa-camera fa-stack-2x">
-          <i className="fas fa-plus fa-stack-1x"></i>
-        </i>
-      </span>
+        <div className="profilePic">
+          <img className="pic" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/15E47/production/_124717698_gettyimages-1395200655.jpg" alt="" />
+        </div>
       <div className="twitter-handle">
         <h3>{props.name}</h3>
         <p>@{props.handle}</p>

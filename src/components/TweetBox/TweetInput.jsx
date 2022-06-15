@@ -1,12 +1,22 @@
 import * as React from "react"
 import AvatarIcon from "../AvatarIcon/AvatarIcon"
+import 'emoji-picker-element';
 
 export default function TweetInput(props) {
-  return (
+  console.log("expand", props.expand);
+  let classN = props.expand ? "expanded" : ""
+;  return (
     <div className="tweet-textarea">
       <AvatarIcon />
+      
 
-      <textarea name="new-tweet-input" type="text" placeholder="What's Happening?" value={props.value} onChange={props.handleOnChange}></textarea>
+      <textarea className={classN} name="new-tweet-input" type="text" placeholder="What's Happening?" value={props.value} onChange={props.handleOnChange} onFocus={function (evt) {
+        evt.target.classList.add("expanded")
+      }} onBlur={function(evt) {
+        if(props.value === "") {
+          evt.target.classList.remove("expanded");
+        }
+      }}></textarea>
 
       <SmileIcon />
     </div>

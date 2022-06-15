@@ -10,6 +10,10 @@ export default function App() {
   const [userProfile, setUserProfile] = useState(codepathUserProfile);
   const [tweets, setTweets] = useState([firstTweet]);
   const [tweetText, setTweetText] = useState("");
+
+  const extraInfo = {
+    following: 5,
+  }
   return (
     <div className="app">
       <Navbar navLinks={navLinks}/>

@@ -1,21 +1,28 @@
 import * as React from "react"
 import TweetInput from "./TweetInput"
 import "./TweetBox.css"
+import 'emoji-picker-element';
+
 
 export default function TweetBox(props) {
   //const submit = document.querySelector("button.tweet-submit-button");
   const [disabled, setDisabled] = React.useState(true);
+  const [expand, setExpand] = React.useState(false);
   function handleOnTweetTextChange(evt) {
     //evt.preventDefault();
     //const submit = document.querySelector("button.tweet-submit-button");
     console.log(evt.target.value);
-    
+    //if it starts with #, make blue? if hashtag true and value is a space, turn off hashtag
     if (evt.target.value.length > 140 || evt.target.value.length === 0) {
       console.log("changed to disabled");
       setDisabled(true);
+      if (evt.target.value.length === 0) {
+        setExpand(false);
+      }
     } else {
       console.log("changed to not disabled");
       setDisabled(false);
+      setExpand(true);
     }
     props.setTweetText(evt.target.value);
   }
@@ -30,17 +37,15 @@ export default function TweetBox(props) {
                     retweets: 0, 
                     likes: 0, 
                     id: props.tweets.length};
-    let newTweets = props.tweets;
-    newTweets.push(newTweet);
-    console.log(newTweets);
-    props.setTweets(newTweets);
+    props.setTweets([...props.tweets, newTweet]);
     props.setTweetText("");
     setDisabled(true);
+    setExpand(false);
   }
 
   return (
     <div className="tweet-box">
-      <TweetInput value={props.tweetText} handleOnChange={handleOnTweetTextChange}/>
+      <TweetInput value={props.tweetText} handleOnChange={handleOnTweetTextChange} expand={expand}/>
 
       <div className="tweet-box-footer">
         <TweetBoxIcons />
